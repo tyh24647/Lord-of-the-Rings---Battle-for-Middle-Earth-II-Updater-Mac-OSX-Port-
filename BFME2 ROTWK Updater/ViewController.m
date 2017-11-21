@@ -10,15 +10,28 @@
 
 #pragma mark - Define compile-time constants
 #define EMPTY ""
+#define NEW_LINE "\n"
+#define ERROR_TAG "ERROR: "
 #define TEST_HTTP_URL "http://www.google.com"
 #define UPDATE_SERVER_URL "test test test test"
 #define BLACK "Black"
 
+#pragma mark - Define runtime constants
+static const float kDefaultOutputXPos = 20.0f;
+static const float kDefaultOutputYPos = 20.0f;
+static const float kDefaultOutputViewHeight = 82.0f;
+static const float kDefaultOutputViewWidth = 436.0f;
+
+#pragma mark - Private properties
 @interface ViewController()
 @property (nonatomic) BOOL updateIsAvailable;
+@property (nonatomic) BOOL showConsole;
+@property (nonatomic) BOOL isFirstDisclosureClick;
 @property (nonatomic, retain) NSString *usrMsg;
+@property (nonatomic) float initialMainViewFrameHeight;
 @end
 
+#pragma mark - Implementation of the view controller
 @implementation ViewController
 @synthesize mainView;
 @synthesize checkForUpdatesBtn;
@@ -26,6 +39,11 @@
 @synthesize usrErrMsg;
 @synthesize usrMsgTxtView;
 @synthesize sysChecker;
+@synthesize msgViewTitleLabel;
+@synthesize copyrightLabel;
+@synthesize versionLabel;
+@synthesize checkingForUpdatesCircle;
+@synthesize msgScrollView;
 
 //
 // Constructor method called immediately when memory is allocated for the
@@ -38,16 +56,17 @@
         self.usrErrMsg = @EMPTY;
         [self hasInternetConnection] ? [self checkForUpdates] : [self outputNoConnectivity];
         self.sysChecker = [[SystemCheckFunctor alloc] init];
+        self.showConsole = YES;
         
         if (usrMsgTxtView) {
             [self.usrMsgTxtView setDelegate:self];
         }
     }
-    
+
     return self;
 }
 
-- (void)viewDidLoadn{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     if (self.checkForUpdatesBtn) {
@@ -62,6 +81,13 @@
         [self.usrMsgTxtView setEditable:NO];
         [self.usrMsgTxtView setTextColor:[NSColor colorNamed:@BLACK]];
     }
+    
+    self.isFirstDisclosureClick = YES;
+    self.initialMainViewFrameHeight = self.view.frame.size.height;
+    
+#ifdef DEBUG
+    [self printStringToMsgConsole:@"DEBUG MODE ENABLED" isErrorMessage:NO];
+#endif
 }
 
 - (NSString *)outputErrMsgToUser:(NSString *)errMsg {
@@ -72,7 +98,7 @@
         
         // asynchronously update the view to display the message
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            [self.usrMsgTxtView setString:errMsg];
+            [self printStringToMsgConsole:errMsg isErrorMessage:YES];
         }];
     }
     
@@ -116,9 +142,112 @@
 - (void)performUpdateCheckInBackground {
     if ([self hasInternetConnection]) {
         // TODO add github link here for repository
-        
-        
     }
+}
+
+- (IBAction)outputDisclosureIndicatorPressed:(id)sender {
+    if (!self.isFirstDisclosureClick) {
+        self.hideOutputDisclosureIndicator.state = !self.showConsole ? NSControlStateValueOn : NSControlStateValueOff;
+    } else {
+        self.hideOutputDisclosureIndicator.state = NSControlStateValueOff;
+        self.showConsole = NO;
+    }
+    
+    // add 'resize output box'task to the dispatch queue
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        float x = self.showConsole ? kDefaultOutputXPos : 0.0f;
+        float y = self.showConsole ? kDefaultOutputYPos : 0.0f;
+        float width = self.showConsole ? kDefaultOutputViewWidth : 0.f;
+        float height = self.showConsole ? kDefaultOutputViewHeight : 0.0f;
+        
+#ifdef DEBUG
+        [self printStringToMsgConsole:[NSString stringWithFormat:@"%@ console output", self.showConsole ? @"Showing" : @"Hiding"] isErrorMessage:NO];
+#endif
+        
+        CGRect scrollViewRect = self.msgScrollView.frame;
+        scrollViewRect.size.height = 0.0f;
+        self.msgScrollView.frame = scrollViewRect;
+        
+        [self.usrMsgTxtView setHidden:!self.showConsole];
+        [self.msgScrollView setHidden:!self.showConsole];
+        
+        // resize text view
+        [self resizeViewRect:self.usrMsgTxtView.frame
+                    withName:@"Output viezw"
+                   xPosition:x
+                   yPosition:y
+                       width:width
+                      height:height
+          completionHandeler:^BOOL(NSError *error, NSString *errorTitle) {
+              if (error) {
+                  [self printStringToMsgConsole:[NSString stringWithFormat:@"%@. %@", error, errorTitle] isErrorMessage:YES];
+                  return NO;
+              }
+              
+              return YES;
+          }];
+    }];
+    
+    // add 'resize main window' task to the dispatch queue
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        float wHeight = self.showConsole ? self.initialMainViewFrameHeight : (self.initialMainViewFrameHeight - kDefaultOutputViewHeight);
+        
+#ifdef DEBUG
+        [self printStringToMsgConsole:[NSString stringWithFormat:@"%@ main window frame", self.showConsole ? @"Expanding" : @"Shrinking"] isErrorMessage:NO];
+        [self printStringToMsgConsole:@"Test error" isErrorMessage:YES];
+#endif
+        
+        // resize main window
+        NSRect windowFrame = [self.view.window frame];
+        windowFrame.size.height -= windowFrame.size.height;
+        windowFrame.size.height += wHeight;
+        
+        [self.view.window setFrame:windowFrame display:YES animate:NO];
+    }];
+    
+    if (!self.isFirstDisclosureClick) {
+        self.showConsole = !self.showConsole;
+    } else {
+        self.isFirstDisclosureClick = NO;
+    }
+}
+
+- (void)resizeViewRect:(CGRect)rect withName:(NSString *)rectName xPosition:(float)x yPosition:(float)y width:(float)width height:(float)height completionHandeler:(BOOL (^)(NSError *error, NSString *errorTitle))completion {
+    
+    BOOL hasError;
+    NSString *consoleOutput = @EMPTY;
+    
+    if (x < 0.0f || y < 0.0f || width < 0.0f || height < 0.0f) {
+        hasError = YES;
+        consoleOutput = [NSString stringWithFormat:@"Unable to resize view rect \"%@\" to the specified dimensions:\n\t- X Position: %f\n\t- Y Position: %f\n\t- Width: %f\n\t- Height: %f\n> Please verify that the specified size is valid and within the bounds of the window", rectName, x, y, width, height];
+        completion([[NSError alloc] init], @"Err");
+    } else {
+        hasError = NO;
+        consoleOutput = [NSString stringWithFormat:@"Resizing view rect \"%@\" to dimensions:\n\t- X Position: %f\n\t- Y Position: %f\n\t- Width: %f\n\t- Height: %f", rectName, x, y, width, height];
+    }
+    
+    //NSLog(@"%@", consoleOutput);
+    [self printStringToMsgConsole:consoleOutput isErrorMessage:hasError];
+    //[self.usrMsgTxtView insertNewline:nil];
+}
+
+- (void)printStringToMsgConsole:(NSString *)outStr isErrorMessage:(BOOL)isErrorMsg {
+    
+    // print new line if message is empty or null
+    outStr = !outStr || [outStr isEqualToString:@EMPTY] ? @NEW_LINE : outStr;
+    NSLog(@"\nUSER_MSG> %@", outStr);   // log the console output to the debugger
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString *formattedStr = [NSString stringWithFormat:@"> %@%@%@", isErrorMsg ? @ERROR_TAG : @EMPTY, outStr, @NEW_LINE];
+        
+        // Add string to text view--red if error, else black
+        NSDictionary *attributes = [NSDictionary dictionaryWithObject:isErrorMsg ? [NSColor redColor] : [NSColor blackColor] forKey:NSForegroundColorAttributeName];
+        NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:formattedStr attributes:attributes];
+        [[self.usrMsgTxtView textStorage] appendAttributedString:attributedString];
+        
+        
+        [self.usrMsgTxtView scrollRangeToVisible:NSMakeRange([[usrMsgTxtView string] length], 0)];
+    });
 }
 
 - (void)outputNoConnectivity {
@@ -126,7 +255,9 @@
 }
 
 - (IBAction)updatesBtnPressed:(id)sender {
-    
+    [self printStringToMsgConsole:@"Checking for updates..." isErrorMessage:NO];
+    [self.checkingForUpdatesCircle startAnimation:nil];
+    //[self.view layoutSubtreeIfNeeded];
 }
 
 - (void)checkForUpdates {
