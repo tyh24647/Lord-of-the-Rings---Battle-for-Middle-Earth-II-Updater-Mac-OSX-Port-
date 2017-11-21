@@ -782,7 +782,7 @@
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mS8-CZ-UV3">
                                 <rect key="frame" x="18" y="2" width="264" height="13"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Copyright © 2017 tylero056, All Rights Reserved." id="27a-P2-lWA">
-                                    <font key="font" metaFont="system" size="9"/>
+                                    <font key="font" metaFont="miniSystem"/>
                                     <color key="textColor" name="shadowColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -793,7 +793,7 @@
                                     <constraint firstAttribute="width" constant="56" id="bwC-uS-NYU"/>
                                 </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="v1.0.0b1" id="vtq-uv-JuB">
-                                    <font key="font" metaFont="system" size="9"/>
+                                    <font key="font" metaFont="miniSystem"/>
                                     <color key="textColor" name="shadowColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -812,8 +812,8 @@
                                     <action selector="outputDisclosureIndicatorPressed:" target="XfG-lQ-9wD" id="ifP-Az-bTK"/>
                                 </connections>
                             </button>
-                            <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-xn-cbf">
-                                <rect key="frame" x="53" y="160" width="16" height="16"/>
+                            <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-xn-cbf">
+                                <rect key="frame" x="288" y="183" width="16" height="16"/>
                             </progressIndicator>
                         </subviews>
                         <constraints>
@@ -832,7 +832,7 @@
                             <constraint firstItem="Vc3-PJ-2Fl" firstAttribute="top" secondItem="ggo-Mc-hWU" secondAttribute="bottom" constant="80" id="XR7-Je-fD7"/>
                             <constraint firstItem="jQS-kd-yyt" firstAttribute="trailing" secondItem="mwg-0U-VHT" secondAttribute="trailing" id="YPs-Ww-aSG"/>
                             <constraint firstItem="YtU-lM-P2l" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="41" id="Yar-I7-lqu"/>
-                            <constraint firstItem="WNr-As-1Mn" firstAttribute="top" secondItem="GJd-xn-cbf" secondAttribute="bottom" constant="38" id="Zeu-fK-UIG"/>
+                            <constraint firstItem="WNr-As-1Mn" firstAttribute="top" secondItem="GJd-xn-cbf" secondAttribute="bottom" constant="61" id="Zeu-fK-UIG"/>
                             <constraint firstItem="45M-eY-Rhk" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="aE8-jF-eSr"/>
                             <constraint firstItem="WNr-As-1Mn" firstAttribute="top" secondItem="YtU-lM-P2l" secondAttribute="top" constant="-3" id="bLg-Vg-nvD"/>
                             <constraint firstAttribute="trailing" secondItem="jQS-kd-yyt" secondAttribute="trailing" constant="20" symbolic="YES" id="cZ1-nA-2Sc"/>
@@ -840,8 +840,8 @@
                             <constraint firstItem="jQS-kd-yyt" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="36" id="hZo-LR-YKE"/>
                             <constraint firstItem="jQS-kd-yyt" firstAttribute="top" secondItem="45M-eY-Rhk" secondAttribute="bottom" constant="8" symbolic="YES" id="k28-Zs-6bi"/>
                             <constraint firstItem="WNr-As-1Mn" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="24" id="lS4-0I-nd9"/>
-                            <constraint firstItem="GJd-xn-cbf" firstAttribute="centerX" secondItem="YtU-lM-P2l" secondAttribute="centerX" constant="-17.5" id="sVW-c5-htl"/>
                             <constraint firstItem="mS8-CZ-UV3" firstAttribute="top" secondItem="Vc3-PJ-2Fl" secondAttribute="bottom" constant="5" id="sgG-5b-X8k"/>
+                            <constraint firstItem="GJd-xn-cbf" firstAttribute="trailing" secondItem="ggo-Mc-hWU" secondAttribute="trailing" constant="24" id="ygq-zZ-NtQ"/>
                         </constraints>
                     </view>
                     <connections>

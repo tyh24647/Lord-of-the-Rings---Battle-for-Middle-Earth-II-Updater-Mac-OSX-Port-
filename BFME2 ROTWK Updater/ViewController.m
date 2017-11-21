@@ -82,8 +82,14 @@ static const float kDefaultOutputViewWidth = 436.0f;
         [self.usrMsgTxtView setTextColor:[NSColor colorNamed:@BLACK]];
     }
     
+    if (self.checkingForUpdatesCircle) {
+        [self.checkingForUpdatesCircle setHidden:YES];
+        [self.checkingForUpdatesCircle stopAnimation:nil];
+    }
+    
     self.isFirstDisclosureClick = YES;
     self.initialMainViewFrameHeight = self.view.frame.size.height;
+    //[self performUpdateCheckInBackground];
     
 #ifdef DEBUG
     [self printStringToMsgConsole:@"DEBUG MODE ENABLED" isErrorMessage:NO];
@@ -141,7 +147,12 @@ static const float kDefaultOutputViewWidth = 436.0f;
 
 - (void)performUpdateCheckInBackground {
     if ([self hasInternetConnection]) {
+        
         // TODO add github link here for repository
+        
+        [self printStringToMsgConsole:@"Internet connection detected and is active" isErrorMessage:NO];
+    } else {
+        [self printStringToMsgConsole:@"No internet connection detected. Please connect to the internet in order to install updates" isErrorMessage:YES];
     }
 }
 
@@ -199,9 +210,9 @@ static const float kDefaultOutputViewWidth = 436.0f;
         
         // resize main window
         NSRect windowFrame = [self.view.window frame];
-        windowFrame.size.height -= windowFrame.size.height;
-        windowFrame.size.height += wHeight;
-        
+        float offset = (wHeight - windowFrame.size.height);
+        windowFrame.size.height += offset;
+        windowFrame.origin.y -= offset;
         [self.view.window setFrame:windowFrame display:YES animate:NO];
     }];
     
@@ -237,7 +248,7 @@ static const float kDefaultOutputViewWidth = 436.0f;
     outStr = !outStr || [outStr isEqualToString:@EMPTY] ? @NEW_LINE : outStr;
     NSLog(@"\nUSER_MSG> %@", outStr);   // log the console output to the debugger
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         NSString *formattedStr = [NSString stringWithFormat:@"> %@%@%@", isErrorMsg ? @ERROR_TAG : @EMPTY, outStr, @NEW_LINE];
         
         // Add string to text view--red if error, else black
@@ -245,9 +256,9 @@ static const float kDefaultOutputViewWidth = 436.0f;
         NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:formattedStr attributes:attributes];
         [[self.usrMsgTxtView textStorage] appendAttributedString:attributedString];
         
-        
+        // scroll to the bottom line of the text view
         [self.usrMsgTxtView scrollRangeToVisible:NSMakeRange([[usrMsgTxtView string] length], 0)];
-    });
+    }];
 }
 
 - (void)outputNoConnectivity {
@@ -256,12 +267,23 @@ static const float kDefaultOutputViewWidth = 436.0f;
 
 - (IBAction)updatesBtnPressed:(id)sender {
     [self printStringToMsgConsole:@"Checking for updates..." isErrorMessage:NO];
+    [self.checkForUpdatesBtn setEnabled:NO];
+    [self.checkingForUpdatesCircle setHidden:NO];
+    [self.checkingForUpdatesCircle setIndeterminate:YES];
+    [self.checkingForUpdatesCircle setUsesThreadedAnimation:YES];
     [self.checkingForUpdatesCircle startAnimation:nil];
-    //[self.view layoutSubtreeIfNeeded];
+    
+    // TODO set up NSTimer for network timeout of 30 seconds
+    
+    [self checkForUpdates];
 }
 
-- (void)checkForUpdates {
+- (BOOL)checkForUpdates {
+    BOOL updateFound = NO;
+    
     // TODO make web request for update check
+    
+    return updateFound;
 }
 
 
