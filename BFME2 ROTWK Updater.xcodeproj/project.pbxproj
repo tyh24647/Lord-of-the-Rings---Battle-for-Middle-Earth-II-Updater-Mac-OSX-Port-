@@ -12,6 +12,7 @@
 		1ACAC3AA1FC337ED00C76E54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1ACAC3A91FC337ED00C76E54 /* Assets.xcassets */; };
 		1ACAC3AD1FC337ED00C76E54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ACAC3AB1FC337ED00C76E54 /* Main.storyboard */; };
 		1ACAC3B01FC337ED00C76E54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ACAC3AF1FC337ED00C76E54 /* main.m */; };
+		1ACAC3B91FC3506200C76E54 /* SystemCheckFunctor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ACAC3B81FC3506200C76E54 /* SystemCheckFunctor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,8 @@
 		1ACAC3AE1FC337ED00C76E54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1ACAC3AF1FC337ED00C76E54 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1ACAC3B11FC337ED00C76E54 /* BFME2_ROTWK_Updater.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BFME2_ROTWK_Updater.entitlements; sourceTree = "<group>"; };
+		1ACAC3B71FC3506200C76E54 /* SystemCheckFunctor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemCheckFunctor.h; sourceTree = "<group>"; };
+		1ACAC3B81FC3506200C76E54 /* SystemCheckFunctor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemCheckFunctor.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +69,8 @@
 				1ACAC3AE1FC337ED00C76E54 /* Info.plist */,
 				1ACAC3AF1FC337ED00C76E54 /* main.m */,
 				1ACAC3B11FC337ED00C76E54 /* BFME2_ROTWK_Updater.entitlements */,
+				1ACAC3B71FC3506200C76E54 /* SystemCheckFunctor.h */,
+				1ACAC3B81FC3506200C76E54 /* SystemCheckFunctor.m */,
 			);
 			path = "BFME2 ROTWK Updater";
 			sourceTree = "<group>";
@@ -143,6 +148,7 @@
 				1ACAC3A81FC337ED00C76E54 /* ViewController.m in Sources */,
 				1ACAC3B01FC337ED00C76E54 /* main.m in Sources */,
 				1ACAC3A51FC337ED00C76E54 /* AppDelegate.m in Sources */,
+				1ACAC3B91FC3506200C76E54 /* SystemCheckFunctor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
