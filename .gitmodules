@@ -1,0 +1,9 @@
+[submodule "Squirrel.Mac"]
+	path = Squirrel.Mac
+	url = https://github.com/Squirrel/Squirrel.Mac
+[submodule "ReactiveCocoa"]
+	path = ReactiveCocoa
+	url = https://github.com/ReactiveCocoa/ReactiveCocoa
+[submodule "Mantle"]
+	path = Mantle
+	url = https://github.com/Mantle/Mantle

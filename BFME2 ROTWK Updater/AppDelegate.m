@@ -6,6 +6,7 @@
 //  Copyright © 2017 Tyler hostager. All rights reserved.
 //
 
+
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
@@ -15,7 +16,7 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    // Insert code here to initialize your application
+    
 }
 
 

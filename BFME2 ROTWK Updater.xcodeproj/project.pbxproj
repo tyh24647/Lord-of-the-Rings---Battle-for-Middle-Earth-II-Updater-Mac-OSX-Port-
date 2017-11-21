@@ -13,7 +13,22 @@
 		1ACAC3AD1FC337ED00C76E54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ACAC3AB1FC337ED00C76E54 /* Main.storyboard */; };
 		1ACAC3B01FC337ED00C76E54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ACAC3AF1FC337ED00C76E54 /* main.m */; };
 		1ACAC3B91FC3506200C76E54 /* SystemCheckFunctor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ACAC3B81FC3506200C76E54 /* SystemCheckFunctor.m */; };
+		1AEA8F311FC46BD20093678B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AEA8F301FC46BD20093678B /* Sparkle.framework */; };
+		1AEA8F331FC46D040093678B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AEA8F301FC46BD20093678B /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1AEA8F321FC46CEE0093678B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1AEA8F331FC46D040093678B /* Sparkle.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1ACAC3A01FC337ED00C76E54 /* BFME2 ROTWK Updater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BFME2 ROTWK Updater.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -28,6 +43,7 @@
 		1ACAC3B11FC337ED00C76E54 /* BFME2_ROTWK_Updater.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BFME2_ROTWK_Updater.entitlements; sourceTree = "<group>"; };
 		1ACAC3B71FC3506200C76E54 /* SystemCheckFunctor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemCheckFunctor.h; sourceTree = "<group>"; };
 		1ACAC3B81FC3506200C76E54 /* SystemCheckFunctor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemCheckFunctor.m; sourceTree = "<group>"; };
+		1AEA8F301FC46BD20093678B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,17 +51,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AEA8F311FC46BD20093678B /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A7D8A661FC4620A00B51E28 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1AEA8F301FC46BD20093678B /* Sparkle.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		1ACAC3971FC337ED00C76E54 = {
 			isa = PBXGroup;
 			children = (
 				1ACAC3A21FC337ED00C76E54 /* BFME2 ROTWK Updater */,
 				1ACAC3A11FC337ED00C76E54 /* Products */,
+				1A7D8A661FC4620A00B51E28 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -85,6 +111,7 @@
 				1ACAC39C1FC337ED00C76E54 /* Sources */,
 				1ACAC39D1FC337ED00C76E54 /* Frameworks */,
 				1ACAC39E1FC337ED00C76E54 /* Resources */,
+				1AEA8F321FC46CEE0093678B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -106,7 +133,7 @@
 				TargetAttributes = {
 					1ACAC39F1FC337ED00C76E54 = {
 						CreatedOnToolsVersion = 9.1;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -274,12 +301,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "BFME2 ROTWK Updater/BFME2_ROTWK_Updater.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "BFME2 ROTWK Updater/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks $(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tylero056.BFME2-ROTWK-Updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -288,12 +321,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "BFME2 ROTWK Updater/BFME2_ROTWK_Updater.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "BFME2 ROTWK Updater/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks $(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tylero056.BFME2-ROTWK-Updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
