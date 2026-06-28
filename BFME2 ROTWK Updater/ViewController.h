@@ -2,8 +2,8 @@
 //  ViewController.h
 //  BFME2 ROTWK Updater
 //
-//  Created by Tyler hostager on 11/20/17.
-//  Copyright © 2017 Tyler hostager. All rights reserved.
+//  Created by u/tylero056 on 11/20/17.
+//  Copyright © 2017 u/tylero056. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -24,8 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak) IBOutlet NSButton *hideOutputDisclosureIndicator;
 @property (weak) IBOutlet NSProgressIndicator *checkingForUpdatesCircle;
 @property (strong) IBOutlet NSScrollView *msgScrollView;
-
-
 
 #pragma mark - Global properties
 @property (nonatomic) BOOL userHasInternetConnection;
