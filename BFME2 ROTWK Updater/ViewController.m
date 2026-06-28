@@ -89,7 +89,7 @@ static const float kDefaultOutputViewWidth = 436.0f;
     
     self.isFirstDisclosureClick = YES;
     self.initialMainViewFrameHeight = self.view.frame.size.height;
-    //[self performUpdateCheckInBackground];
+    [self performUpdateCheckInBackground];
     
 #ifdef DEBUG
     [self printStringToMsgConsole:@"DEBUG MODE ENABLED" isErrorMessage:NO];
@@ -102,7 +102,7 @@ static const float kDefaultOutputViewWidth = 436.0f;
     if (errMsg && ![errMsg isEqualToString:@EMPTY]) {
         retVal = errMsg;
         
-        // asynchronously update the view to display the message
+        // async update the view to display the message
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self printStringToMsgConsole:errMsg isErrorMessage:YES];
         }];
@@ -149,7 +149,7 @@ static const float kDefaultOutputViewWidth = 436.0f;
     if ([self hasInternetConnection]) {
         
         // TODO add github link here for repository
-        
+ 
         [self printStringToMsgConsole:@"Internet connection detected and is active" isErrorMessage:NO];
     } else {
         [self printStringToMsgConsole:@"No internet connection detected. Please connect to the internet in order to install updates" isErrorMessage:YES];
@@ -282,7 +282,6 @@ static const float kDefaultOutputViewWidth = 436.0f;
     BOOL updateFound = NO;
     
     // TODO make web request for update check
-    
     return updateFound;
 }
 
